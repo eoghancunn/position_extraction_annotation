@@ -322,18 +322,21 @@ def main():
             </div>
         """, unsafe_allow_html=True)
         
+        # Navigation callback functions
+        def go_previous():
+            if st.session_state.current_index > 0:
+                st.session_state.current_index -= 1
+        
+        def go_next():
+            if st.session_state.current_index < len(df_filtered) - 1:
+                st.session_state.current_index += 1
+        
         # Navigation buttons
         nav_col1, nav_col2, nav_col3 = st.columns([1, 1, 1])
         with nav_col1:
-            if st.button("◀ Previous", use_container_width=True):
-                if st.session_state.current_index > 0:
-                    st.session_state.current_index -= 1
-                    st.rerun()
+            st.button("◀ Previous", use_container_width=True, on_click=go_previous)
         with nav_col2:
-            if st.button("Next ▶", use_container_width=True):
-                if st.session_state.current_index < len(df_filtered) - 1:
-                    st.session_state.current_index += 1
-                    st.rerun()
+            st.button("Next ▶", use_container_width=True, on_click=go_next)
         with nav_col3:
             st.markdown(f"**{st.session_state.current_index + 1} / {len(df_filtered)}**")
         
