@@ -156,6 +156,7 @@ def main():
         .main > div > div > div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:first-child {
             flex: 2 !important;
         }
+        
         .main > div > div > div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:last-child {
             flex: 1 1 200px !important;
             min-width: 200px !important;
@@ -166,11 +167,11 @@ def main():
         .main h3 {
             font-size: 1.3rem !important;
         }
-
+ 
         .main h2 {
             font-size: 1.4rem !important;
         }
-
+ 
         .main h1 {
             font-size: 1.5rem !important;
         }
@@ -345,8 +346,8 @@ def main():
         
         st.markdown("---")
         
-        # Scrollable container for speaker info
-        with st.container():
+        # Scrollable container for speaker info with fixed height
+        with st.container(height=800):
             # Issue Summary
             col_header, col_thumb_up, col_thumb_down = st.columns([6, 1, 1])
             with col_header:
@@ -489,8 +490,8 @@ def main():
         report_name = speaker_data['report']
         # st.markdown('<div style="height: 180px;"></div>', unsafe_allow_html=True)
         
-        # Scrollable container for report
-        with st.container(height=850):
+        # Report container with matching height to right column
+        with st.container(height=1000, border=False):
             if pd.notna(report_name) and report_name != "":
                 # Load and display report
                 report_data = load_report(report_name)
