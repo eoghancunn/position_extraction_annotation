@@ -249,6 +249,7 @@ def main():
             save_feedback(uploaded_data)
             st.session_state.upload_processed = True
             st.sidebar.success("Annotations loaded successfully!")
+            st.rerun()  # Force rerun to refresh text areas with uploaded comments
         except Exception as e:
             st.sidebar.error(f"Error loading file: {e}")
     elif uploaded_file is None:
@@ -369,7 +370,7 @@ def main():
             issue_comment = st.text_area(
                 "Comments/Notes:",
                 value=get_comment(st.session_state.current_index, "issue"),
-                key="issue_comment",
+                key=f"issue_comment_{st.session_state.current_index}",
                 height=80,
                 placeholder="Add any notes or comments about this extracted issue..."
             )
@@ -402,7 +403,7 @@ def main():
             position_comment = st.text_area(
                 "Comments/Notes:",
                 value=get_comment(st.session_state.current_index, "position"),
-                key="position_comment",
+                key=f"position_comment_{st.session_state.current_index}",
                 height=80,
                 placeholder="Add any notes or comments about this extracted position..."
             )
@@ -437,7 +438,7 @@ def main():
             argument_comment = st.text_area(
                 "Comments/Notes:",
                 value=get_comment(st.session_state.current_index, "argument"),
-                key="argument_comment",
+                key=f"argument_comment_{st.session_state.current_index}",
                 height=80,
                 placeholder="Add any notes or comments about this extracted argument..."
             )
@@ -472,7 +473,7 @@ def main():
             proposal_comment = st.text_area(
                 "Comments/Notes:",
                 value=get_comment(st.session_state.current_index, "proposal"),
-                key="proposal_comment",
+                key=f"proposal_comment_{st.session_state.current_index}",
                 height=80,
                 placeholder="Add any notes or comments about this extracted proposal..."
             )
