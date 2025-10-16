@@ -315,8 +315,11 @@ def main():
         key='speaker_select'
     )
     
-    # Update current_index if dropdown changes
-    st.session_state.current_index = display_names.index(selected_display_name)
+    # Update current_index ONLY if dropdown actually changed
+    # (prevents overriding navigation button changes)
+    new_index = display_names.index(selected_display_name)
+    if new_index != st.session_state.current_index:
+        st.session_state.current_index = new_index
     
     # Get current speaker's data using the row index
     speaker_data = df_filtered.iloc[st.session_state.current_index]
@@ -499,7 +502,7 @@ def main():
         # st.markdown('<div style="height: 180px;"></div>', unsafe_allow_html=True)
         
         # Scrollable container for report
-        with st.container():
+        with st.container(height=850):
             if pd.notna(report_name) and report_name != "":
                 # Load and display report
                 report_data = load_report(report_name)
