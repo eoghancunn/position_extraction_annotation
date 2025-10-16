@@ -290,6 +290,23 @@ def main():
     if 'current_index' not in st.session_state:
         st.session_state.current_index = 0
     
+    # Initialize navigation button states
+    if 'nav_prev_clicked' not in st.session_state:
+        st.session_state.nav_prev_clicked = False
+    if 'nav_next_clicked' not in st.session_state:
+        st.session_state.nav_next_clicked = False
+    
+    # Handle navigation button clicks FIRST, before any rendering
+    if st.session_state.nav_prev_clicked:
+        if st.session_state.current_index > 0:
+            st.session_state.current_index -= 1
+        st.session_state.nav_prev_clicked = False
+    
+    if st.session_state.nav_next_clicked:
+        if st.session_state.current_index < len(df_filtered) - 1:
+            st.session_state.current_index += 1
+        st.session_state.nav_next_clicked = False
+    
     # Speaker dropdown in sidebar (also updates current_index)
     selected_display_name = st.sidebar.selectbox(
         "Select Speaker:",
@@ -322,22 +339,18 @@ def main():
             </div>
         """, unsafe_allow_html=True)
         
-        # Navigation buttons with session state keys
+        # Navigation buttons that set flags for next rerun
         nav_col1, nav_col2, nav_col3 = st.columns([1, 1, 1])
         with nav_col1:
-            prev_clicked = st.button("◀ Previous", use_container_width=True, key="nav_prev")
+            if st.button("◀ Previous", use_container_width=True, key="nav_prev_btn"):
+                st.session_state.nav_prev_clicked = True
+                st.rerun()
         with nav_col2:
-            next_clicked = st.button("Next ▶", use_container_width=True, key="nav_next")
+            if st.button("Next ▶", use_container_width=True, key="nav_next_btn"):
+                st.session_state.nav_next_clicked = True
+                st.rerun()
         with nav_col3:
             st.markdown(f"**{st.session_state.current_index + 1} / {len(df_filtered)}**")
-        
-        # Handle navigation after button rendering
-        if prev_clicked and st.session_state.current_index > 0:
-            st.session_state.current_index -= 1
-            st.rerun()
-        if next_clicked and st.session_state.current_index < len(df_filtered) - 1:
-            st.session_state.current_index += 1
-            st.rerun()
         
         st.markdown("---")
         
