@@ -355,7 +355,7 @@ def main():
         st.markdown("---")
         
         # Scrollable container for speaker info
-        with st.container(height=600):
+        with st.container():
             # Issue Summary
             col_header, col_thumb_up, col_thumb_down = st.columns([6, 1, 1])
             with col_header:
@@ -499,7 +499,7 @@ def main():
         # st.markdown('<div style="height: 180px;"></div>', unsafe_allow_html=True)
         
         # Scrollable container for report
-        with st.container(height=850):
+        with st.container():
             if pd.notna(report_name) and report_name != "":
                 # Load and display report
                 report_data = load_report(report_name)
