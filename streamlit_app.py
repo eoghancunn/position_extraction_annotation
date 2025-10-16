@@ -14,7 +14,7 @@ STOPWORDS = set(['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', '
                     'these', 'those', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'clear', 'non'])
 
 # Set page config
-st.set_page_config(page_title="Debate Position Viewer", layout="centered", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Debate Position Viewer", layout="centered")
 
 # Load data
 @st.cache_data
