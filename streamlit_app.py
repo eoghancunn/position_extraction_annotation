@@ -307,19 +307,7 @@ def main():
             st.session_state.current_index += 1
         st.session_state.nav_next_clicked = False
     
-    # Speaker dropdown in sidebar (also updates current_index)
-    selected_display_name = st.sidebar.selectbox(
-        "Select Speaker:",
-        display_names,
-        index=st.session_state.current_index,
-        key='speaker_select'
-    )
-    
-    # Update current_index ONLY if dropdown actually changed
-    # (prevents overriding navigation button changes)
-    new_index = display_names.index(selected_display_name)
-    if new_index != st.session_state.current_index:
-        st.session_state.current_index = new_index
+    # No dropdown - navigation is via Previous/Next buttons only
     
     # Get current speaker's data using the row index
     speaker_data = df_filtered.iloc[st.session_state.current_index]
