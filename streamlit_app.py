@@ -34,19 +34,15 @@ def load_report(report_name):
             return json.load(f)['summary']
     return None
 
-# Load feedback data
+# Load feedback data from session state (not file)
 def load_feedback():
-    feedback_file = Path("feedback_data.json")
-    if feedback_file.exists():
-        with open(feedback_file, 'r') as f:
-            return json.load(f)
-    return {}
+    if 'feedback_data' not in st.session_state:
+        st.session_state.feedback_data = {}
+    return st.session_state.feedback_data
 
-# Save feedback data
+# Save feedback data to session state (not file)
 def save_feedback(feedback_data):
-    feedback_file = Path("feedback_data.json")
-    with open(feedback_file, 'w') as f:
-        json.dump(feedback_data, f, indent=2)
+    st.session_state.feedback_data = feedback_data
 
 # Record feedback for a specific summary
 def record_feedback(row_index, summary_type, feedback_value, comment=None):
