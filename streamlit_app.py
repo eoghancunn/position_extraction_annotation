@@ -343,7 +343,38 @@ def main():
         
         st.markdown("---")
         
-        # Scrollable container for speaker info with fixed height
+        # Combined text section
+        st.subheader("Extracted Text")
+        
+        # Combine all text fields into a single paragraph
+        combined_text_parts = []
+        
+        # Add issue summary
+        if pd.notna(speaker_data['issueSum']) and speaker_data['issueSum'] != "":
+            combined_text_parts.append(f"{speaker_data['issueSum']}")
+        
+        # Add position summary
+        if pd.notna(speaker_data['positionSum']) and speaker_data['positionSum'] != "":
+            combined_text_parts.append(f"{speaker_data['positionSum']}")
+        
+        # Add argument summary
+        if pd.notna(speaker_data['argSum']) and speaker_data['argSum'] != "":
+            combined_text_parts.append(f"{speaker_data['argSum']}")
+        
+        # Add proposal summary
+        if pd.notna(speaker_data['propSum']) and speaker_data['propSum'] != "":
+            combined_text_parts.append(f"{speaker_data['propSum']}")
+        
+        # Display combined text
+        if combined_text_parts:
+            combined_text = "\n".join(combined_text_parts)
+            st.write(combined_text)
+        else:
+            st.info("No content extracted")
+        
+        st.markdown("---")
+        
+        # Scrollable container for feedback sections
         with st.container():
             # Issue Summary
             col_header, col_thumb_up, col_thumb_down = st.columns([6, 1, 1])
@@ -360,12 +391,7 @@ def main():
                            type="primary" if current_feedback is False else "secondary"):
                     record_feedback(st.session_state.current_index, "issue", "down")
                     st.rerun()
-            
-            if pd.notna(speaker_data['issueSum']) and speaker_data['issueSum'] != "":
-                st.write(speaker_data['issueSum'])
-            else:
-                st.info("No issue extracted")
-            
+
             # Comment box for issue
             issue_comment = st.text_area(
                 "Comments/Notes:",
@@ -394,11 +420,7 @@ def main():
                            type="primary" if current_feedback is False else "secondary"):
                     record_feedback(st.session_state.current_index, "position", "down")
                     st.rerun()
-            if pd.notna(speaker_data['positionSum']) and speaker_data['positionSum'] != "":
-                st.write(speaker_data['positionSum'])
-            else:
-                st.info("No position extracted")
-            
+
             # Comment box for position
             position_comment = st.text_area(
                 "Comments/Notes:",
@@ -429,11 +451,6 @@ def main():
                     record_feedback(st.session_state.current_index, "argument", "down")
                     st.rerun()
             
-            if pd.notna(speaker_data['argSum']) and speaker_data['argSum'] != "":
-                st.write(speaker_data['argSum'])
-            else:
-                st.info("No argument extracted")
-            
             # Comment box for argument
             argument_comment = st.text_area(
                 "Comments/Notes:",
@@ -463,11 +480,6 @@ def main():
                            type="primary" if current_feedback is False else "secondary"):
                     record_feedback(st.session_state.current_index, "proposal", "down")
                     st.rerun()
-            
-            if pd.notna(speaker_data['propSum']) and speaker_data['propSum'] != "":
-                st.write(speaker_data['propSum'])
-            else:
-                st.info("No proposal extracted")
             
             # Comment box for proposal
             proposal_comment = st.text_area(

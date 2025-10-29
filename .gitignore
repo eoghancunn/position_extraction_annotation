@@ -1,0 +1,14 @@
+feedback_data.json
+*.pyc
+__pycache__/
+.DS_Store
+.ipynb_checkpoints/
+exploration.ipynb
+debate_data/
+exploration copy.ipynb
+debate_1_positions.csv
+debate_1_reconstructed_positions.csv
+debate_1_summarised_positions.csv
+feedback/
+combined_results.png
+
